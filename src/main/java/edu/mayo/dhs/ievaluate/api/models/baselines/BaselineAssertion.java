@@ -1,7 +1,7 @@
 package edu.mayo.dhs.ievaluate.api.models.baselines;
 
-import edu.mayo.dhs.ievaluate.api.ProfiledApplication;
-import edu.mayo.dhs.ievaluate.api.models.tasks.PipelineTask;
+import edu.mayo.dhs.ievaluate.api.models.applications.ProfiledApplication;
+import edu.mayo.dhs.ievaluate.api.models.tasks.ApplicationTask;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ public abstract class BaselineAssertion {
     protected UUID id;
     protected BaselineCohort baseline;
     protected ProfiledApplication application;
-    protected PipelineTask task;
+    protected ApplicationTask task;
     protected String input;
     protected Map<String, String> inputParams;
     protected List<AbstractorAssertion> assertions;

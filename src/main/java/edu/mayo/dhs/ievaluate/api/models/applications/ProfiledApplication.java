@@ -1,6 +1,6 @@
-package edu.mayo.dhs.ievaluate.api;
+package edu.mayo.dhs.ievaluate.api.models.applications;
 
-import edu.mayo.dhs.ievaluate.api.models.tasks.PipelineTask;
+import edu.mayo.dhs.ievaluate.api.models.tasks.ApplicationTask;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,10 +25,10 @@ public abstract class ProfiledApplication {
     protected String description;
 
     /**
-     * A list of {@link PipelineTask} that define what assertion tasks this application can perform
+     * A list of {@link ApplicationTask} that define what assertion tasks this application can perform
      * (and thus what ought to be evaluated)
      */
-    protected List<PipelineTask> tasks;
+    protected List<ApplicationTask> tasks;
 
 
 
