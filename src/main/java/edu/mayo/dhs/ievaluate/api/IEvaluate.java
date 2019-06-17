@@ -1,60 +1,36 @@
 package edu.mayo.dhs.ievaluate.api;
 
-import edu.mayo.dhs.ievaluate.api.models.applications.ProfiledApplication;
-import edu.mayo.dhs.ievaluate.api.plugins.IEvaluatePlugin;
-import edu.mayo.dhs.ievaluate.api.util.StorageProvider;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.UUID;
-
 /**
- * Global API entry point for the IEvaluate Framework
+ * A global entry point for static access to all of the integrated evaluation framework's functionality on the
+ * currently running IEvaluate instance
  */
-public interface IEvaluate {
+public final class IEvaluate {
 
-    /* ===== Begin Plugin Management Functions ===== */
+    private static IEvaluateServer server;
 
-    /**
-     * @param name  The name of the plugin
-     * @param clazz The plugin class that is expected
-     * @param <T>   The {@link IEvaluatePlugin} implementation type corresponding to clazz
-     * @return The instantiated instance of the {@link IEvaluatePlugin}
-     */
-    <T extends IEvaluatePlugin> T getPlugin(String name, Class<T> clazz);
+    private IEvaluate() {} // Static class, not to be instantiated
 
     /**
-     * Do not call before application initialization is complete
-     * @return A mapping of Registered Plugin Name => Plugin Instances
-     */
-    Map<String, IEvaluatePlugin> getRegisteredPlugins();
-
-    /* ===== Begin Application Management Functions ===== */
-
-    /**
-     * @return A collection of all {@link ProfiledApplication} currently registered to the Integrated Evaluation Framework
-     */
-    Collection<ProfiledApplication> getRegisteredApplications();
-
-    /**
-     * @param uid   The unique ID of the application
-     * @return The application with this unique identifier
-     */
-    ProfiledApplication getApplication(UUID uid);
-
-    /**
-     * Registers and performs appropriate serialization an application instance
+     * Gets the current {@link IEvaluateServer} powering the application
      *
-     * @param application The application instance
+     * @return The registered server instance
      */
-    void registerApplication(ProfiledApplication application);
-
-    /* ===== End Application Management Functions ===== */
-
-    /* ===== Begin Serialization Functions ===== */
+    public static IEvaluateServer getServer() {
+        return IEvaluate.server;
+    }
 
     /**
-     * @return The {@link StorageProvider} associated with the current running instance
+     * Attempts to register a {@link IEvaluateServer} singleton as the currently running application
+     * <br/>
+     * This will fail with an {@link UnsupportedOperationException} if a server is already registered
+     *
+     * @param server Server instance
      */
-    StorageProvider getStorage();
+    public static void setServer(IEvaluateServer server) {
+        if (IEvaluate.server != null) {
+            throw new UnsupportedOperationException("A server is already registered!");
+        }
+
+        IEvaluate.server = server;
+    }
 }
