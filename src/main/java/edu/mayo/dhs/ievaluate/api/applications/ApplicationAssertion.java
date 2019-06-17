@@ -1,4 +1,4 @@
-package edu.mayo.dhs.ievaluate.api.models.applications;
+package edu.mayo.dhs.ievaluate.api.applications;
 
 import edu.mayo.dhs.ievaluate.api.models.tasks.ApplicationTask;
 

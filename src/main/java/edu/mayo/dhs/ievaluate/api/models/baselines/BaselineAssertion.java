@@ -1,6 +1,6 @@
 package edu.mayo.dhs.ievaluate.api.models.baselines;
 
-import edu.mayo.dhs.ievaluate.api.models.applications.ProfiledApplication;
+import edu.mayo.dhs.ievaluate.api.applications.ProfiledApplication;
 import edu.mayo.dhs.ievaluate.api.models.tasks.ApplicationTask;
 
 import java.util.List;

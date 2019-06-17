@@ -1,5 +1,7 @@
 package edu.mayo.dhs.ievaluate.api.plugins;
 
+import java.io.File;
+
 /**
  * Subclasses define plugins that extend functionality of the integrated evaluation framework
  * <br/>
@@ -9,10 +11,19 @@ package edu.mayo.dhs.ievaluate.api.plugins;
 public abstract class IEvaluatePlugin {
 
     /**
+     * Called before {@link #onInit()}
+     * Any config.json file embedded within the plugin will be copied over by default if not already existing
+     *
+     * @param configDir A directory for configuration storage assigned to this plugin.
+     */
+    public void loadConfig(File configDir) {
+    }
+
+    /**
      * Used to initialize plugin functionality.
      * <br/>
      * Called during the plugin loading process before {@link #onEnable()}.
-     * At this point, only the plugins listed in {@link PluginConfiguration#getRequired()} will be available and will
+     * At this point, only the plugins listed in {@link PluginDescriptor#getRequired()} will be available and will
      * only have run their onInit() methods.
      */
     public void onInit() {
@@ -26,5 +37,6 @@ public abstract class IEvaluatePlugin {
      */
     public void onEnable() {
     }
+
 
 }

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * A POJO representation of the plugin.json file attached to all plugin JAR files
  */
-public final class PluginConfiguration {
+public final class PluginDescriptor {
     /**
      * The name of the plugin
      */

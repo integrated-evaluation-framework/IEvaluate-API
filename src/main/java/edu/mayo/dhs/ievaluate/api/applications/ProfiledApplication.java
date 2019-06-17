@@ -1,4 +1,4 @@
-package edu.mayo.dhs.ievaluate.api.models.applications;
+package edu.mayo.dhs.ievaluate.api.applications;
 
 import edu.mayo.dhs.ievaluate.api.models.tasks.ApplicationTask;
 
@@ -31,5 +31,35 @@ public abstract class ProfiledApplication {
     protected List<ApplicationTask> tasks;
 
 
+    public UUID getId() {
+        return id;
+    }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<ApplicationTask> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<ApplicationTask> tasks) {
+        this.tasks = tasks;
+    }
 }
