@@ -11,8 +11,10 @@ import java.io.File;
 public abstract class IEvaluatePlugin {
 
     /**
-     * Called before {@link #onInit()}
-     * Any config.json file embedded within the plugin will be copied over by default if not already existing
+     * Called during {@link edu.mayo.dhs.ievaluate.api.IEvaluateServer.InitState#PRE_INIT}
+     * Any config.json file embedded within the plugin will be copied over by default if not already existing.
+     * <br/>
+     * No guarantees are yet made about the state of any dependencies
      *
      * @param configDir A directory for configuration storage assigned to this plugin.
      */
