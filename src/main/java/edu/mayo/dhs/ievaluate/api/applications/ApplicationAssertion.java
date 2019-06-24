@@ -12,10 +12,12 @@ import java.util.UUID;
  */
 public abstract class ApplicationAssertion {
     protected UUID id;
+    protected ProfiledApplication application;
     protected ApplicationTask task;
     protected Date assertionDtm;
     protected String applicationVersion;
     protected String input;
     protected Map<String, String> inputParams;
+    protected String assertedValue;
     protected List<String> applicationDiagnostics;
 }

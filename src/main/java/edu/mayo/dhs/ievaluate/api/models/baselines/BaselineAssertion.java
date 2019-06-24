@@ -19,4 +19,60 @@ public abstract class BaselineAssertion {
     protected String input;
     protected Map<String, String> inputParams;
     protected List<AbstractorAssertion> assertions;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public BaselineCohort getBaseline() {
+        return baseline;
+    }
+
+    public void setBaseline(BaselineCohort baseline) {
+        this.baseline = baseline;
+    }
+
+    public ProfiledApplication getApplication() {
+        return application;
+    }
+
+    public void setApplication(ProfiledApplication application) {
+        this.application = application;
+    }
+
+    public ApplicationTask getTask() {
+        return task;
+    }
+
+    public void setTask(ApplicationTask task) {
+        this.task = task;
+    }
+
+    public String getInput() {
+        return input;
+    }
+
+    public void setInput(String input) {
+        this.input = input;
+    }
+
+    public Map<String, String> getInputParams() {
+        return inputParams;
+    }
+
+    public void setInputParams(Map<String, String> inputParams) {
+        this.inputParams = inputParams;
+    }
+
+    public List<AbstractorAssertion> getAssertions() {
+        return assertions;
+    }
+
+    public void setAssertions(List<AbstractorAssertion> assertions) {
+        this.assertions = assertions;
+    }
 }
