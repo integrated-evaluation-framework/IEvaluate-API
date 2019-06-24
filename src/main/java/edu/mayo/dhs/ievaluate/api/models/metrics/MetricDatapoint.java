@@ -18,7 +18,44 @@ public final class MetricDatapoint {
     private Date measuredTime;
 
     /**
+     * The application version
+     */
+    private String applicationVersion;
+
+    /**
      * The value assigned to this metric at {@link #measuredTime}
      */
     private double value;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getMeasuredTime() {
+        return measuredTime;
+    }
+
+    public void setMeasuredTime(Date measuredTime) {
+        this.measuredTime = measuredTime;
+    }
+
+    public String getApplicationVersion() {
+        return applicationVersion;
+    }
+
+    public void setApplicationVersion(String applicationVersion) {
+        this.applicationVersion = applicationVersion;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
 }
