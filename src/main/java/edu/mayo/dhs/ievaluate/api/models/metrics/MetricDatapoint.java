@@ -27,6 +27,15 @@ public final class MetricDatapoint {
      */
     private double value;
 
+    public MetricDatapoint() {}
+
+    public MetricDatapoint(String name, Date measuredTime, String applicationVersion, double value) {
+        this.name = name;
+        this.measuredTime = measuredTime;
+        this.applicationVersion = applicationVersion;
+        this.value = value;
+    }
+
     public String getName() {
         return name;
     }

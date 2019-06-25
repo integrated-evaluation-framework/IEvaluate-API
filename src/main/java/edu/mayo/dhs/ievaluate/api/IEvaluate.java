@@ -6,7 +6,10 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * A global entry point for static access to all of the integrated evaluation framework's functionality on the
- * currently running IEvaluate instance
+ * currently running IEvaluate instance.
+ *
+ * Thread safety (or appropriate barriers) is expected of all API functions once the server's initialization
+ * state reaches {@link IEvaluateServer.InitState#COMPLETE}
  */
 public final class IEvaluate {
 

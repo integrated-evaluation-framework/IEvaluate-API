@@ -7,6 +7,8 @@ import edu.mayo.dhs.ievaluate.api.plugins.PluginManager;
 import edu.mayo.dhs.ievaluate.api.storage.StorageProvider;
 import org.apache.logging.log4j.Logger;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * A running IEvaluate server instance
  */
@@ -48,6 +50,12 @@ public interface IEvaluateServer {
 
     /* ===== End Serialization Functions ===== */
 
+    /* ===== Begin Assertion Definitions ===== */
+
+
+
+    /* ===== End Assertion Definitions ===== */
+
     /* ===== Begin Server State Handling ===== */
 
     /**
@@ -80,7 +88,7 @@ public interface IEvaluateServer {
          */
         POST_ENABLE,
         /**
-         * Post {@link IEvaluatePlugin#onEnable()}, server should be considered fully initialized
+         * Post {@link IEvaluatePlugin#onEnable()}, server should be considered fully initialized.
          */
         COMPLETE
     }
