@@ -1,7 +1,11 @@
 package edu.mayo.dhs.ievaluate.api.models.metrics.common;
 
+import edu.mayo.dhs.ievaluate.api.IEvaluate;
 import edu.mayo.dhs.ievaluate.api.applications.ApplicationAssertionCollection;
 import edu.mayo.dhs.ievaluate.api.applications.ProfiledApplication;
+import edu.mayo.dhs.ievaluate.api.models.assertions.AssertionDefinition;
+import edu.mayo.dhs.ievaluate.api.models.assertions.AssertionInput;
+import edu.mayo.dhs.ievaluate.api.models.assertions.AssertionOutput;
 import edu.mayo.dhs.ievaluate.api.models.baselines.BaselineCohort;
 import edu.mayo.dhs.ievaluate.api.models.metrics.MetricDatapoint;
 import edu.mayo.dhs.ievaluate.api.models.metrics.MetricProvider;
@@ -53,29 +57,32 @@ public final class BaseStatisticsAndMetrics extends MetricProvider {
     }
 
     @Override
-    public void produceStatistics(ProfiledApplication application, String applicationVersion, ApplicationTask task, ApplicationAssertionCollection assertions, BaselineCohort cohort, Map<String, Double> prexisting) {
+    public void produceStatistics(ProfiledApplication application, String applicationVersion, ApplicationTask task,
+                                  ApplicationAssertionCollection assertions, BaselineCohort cohort,
+                                  Map<String, Double> prexisting) {
         AtomicReference<Double> tpRef = new AtomicReference<>(0.0);
         AtomicReference<Double> fpRef = new AtomicReference<>(0.0);
         // Generate an internal mapping of the specific task
-        Map<AssertionSubjectDefinition, String> baselineAssertions = new HashMap<>();
-        HashSet<AssertionSubjectDefinition> baselines = new HashSet<>(baselineAssertions.keySet());
+        AssertionDefinition def = IEvaluate.getServer().getAssertionDefinition(task.getTaskAssertionDef());
+        Map<AssertionInput, AssertionOutput> baselineAssertions = new HashMap<>();
+        HashSet<AssertionInput> baselines = new HashSet<>(baselineAssertions.keySet());
         cohort.getItems().stream().filter(assertion -> assertion.getTask().equals(task)).forEach(a -> {
-            AssertionSubjectDefinition subj = new AssertionSubjectDefinition(a.getInput(), a.getInputParams());
+            AssertionInput input = IEvaluate.getServer().getAssertionInput(def.getInputType(), a.getInputParams());
             // TODO support quorums, for now just pull the first
-            String asserted = a.getAssertions().iterator().next().getAssertedValue();
-            baselineAssertions.put(subj, asserted);
+            Map<String, String> asserted = a.getAssertions().iterator().next().getAssertedValue();
+            baselineAssertions.put(input, IEvaluate.getServer().getAssertionOutput(def.getOutputType(), asserted));
         });
         assertions.getItems()
                 .stream()
                 .filter(assertion -> assertion.getTask().equals(task))
                 .forEach(a -> {
-                    AssertionSubjectDefinition subj = new AssertionSubjectDefinition(a.getInput(), a.getInputParams());
-                    baselines.remove(subj);
-                    String gold = baselineAssertions.get(subj);
+                    AssertionInput input = IEvaluate.getServer().getAssertionInput(def.getInputType(), a.getInputParams());
+                    baselines.remove(input);
+                    AssertionOutput gold = baselineAssertions.get(input);
                     if (gold == null) { // False positive
                         fpRef.accumulateAndGet(1.0, Double::sum);
                     } else {
-                        if (gold.equals(a.getAssertedValue())) {
+                        if (gold.equals(IEvaluate.getServer().getAssertionOutput(def.getOutputType(), a.getAssertedValue()))) {
                             tpRef.accumulateAndGet(1.0, Double::sum);
                         }
                     }
@@ -92,29 +99,4 @@ public final class BaseStatisticsAndMetrics extends MetricProvider {
         prexisting.put(METRIC_PRECISION, precision);
         prexisting.put(METRIC_F1, 2 * ((precision * recall) / (precision + recall)));
     }
-
-    private class AssertionSubjectDefinition {
-        private String input;
-        private Map<String, String> inputParams;
-
-        private AssertionSubjectDefinition(String input, Map<String, String> inputParams) {
-            this.input = input;
-            this.inputParams = inputParams == null || inputParams.isEmpty() ? null : inputParams; // ensure empty is stored as null for memory
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            AssertionSubjectDefinition that = (AssertionSubjectDefinition) o;
-            return Objects.equals(input, that.input) &&
-                    Objects.equals(inputParams, that.inputParams);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(input, inputParams);
-        }
-    }
-
 }

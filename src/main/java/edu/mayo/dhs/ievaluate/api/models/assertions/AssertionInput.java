@@ -3,6 +3,9 @@ package edu.mayo.dhs.ievaluate.api.models.assertions;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * An instantiated assertion input definition
+ */
 public abstract class AssertionInput {
 
     /**
@@ -14,6 +17,13 @@ public abstract class AssertionInput {
      * @return The input parameters as a map
      */
     public abstract Map<String, String> asParameterMap();
+
+    /**
+     * Used to instantiate this input definition instance with the given parameter map
+     *
+     * @param params The parameter map representing input arguments
+     */
+    public abstract void fromParameterMap(Map<String, String> params);
 
     /**
      * Used to force implementations to define an equals method, with the same contract
@@ -39,6 +49,6 @@ public abstract class AssertionInput {
 
     @Override
     public final boolean equals(Object other) {
-        return other instanceof AssertionInput && matches((AssertionInput)other);
+        return other instanceof AssertionInput && matches((AssertionInput) other);
     }
 }

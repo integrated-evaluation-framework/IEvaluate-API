@@ -1,5 +1,6 @@
 package edu.mayo.dhs.ievaluate.api.applications;
 
+import edu.mayo.dhs.ievaluate.api.models.assertions.AssertionDefinition;
 import edu.mayo.dhs.ievaluate.api.models.tasks.ApplicationTask;
 
 import java.util.Date;
@@ -14,11 +15,12 @@ public abstract class ApplicationAssertion {
     protected UUID id;
     protected ProfiledApplication application;
     protected ApplicationTask task;
+    protected Class<? extends AssertionDefinition> definition;
     protected Date assertionDtm;
     protected String applicationVersion;
     protected String input;
     protected Map<String, String> inputParams;
-    protected String assertedValue;
+    protected Map<String, String> assertedValue;
     protected List<String> applicationDiagnostics;
 
     public UUID getId() {
@@ -35,6 +37,14 @@ public abstract class ApplicationAssertion {
 
     public void setApplication(ProfiledApplication application) {
         this.application = application;
+    }
+
+    public Class<? extends AssertionDefinition> getDefinition() {
+        return definition;
+    }
+
+    public void setDefinition(Class<? extends AssertionDefinition> definition) {
+        this.definition = definition;
     }
 
     public ApplicationTask getTask() {
@@ -77,11 +87,11 @@ public abstract class ApplicationAssertion {
         this.inputParams = inputParams;
     }
 
-    public String getAssertedValue() {
+    public Map<String, String> getAssertedValue() {
         return assertedValue;
     }
 
-    public void setAssertedValue(String assertedValue) {
+    public void setAssertedValue(Map<String, String> assertedValue) {
         this.assertedValue = assertedValue;
     }
 
@@ -91,5 +101,32 @@ public abstract class ApplicationAssertion {
 
     public void setApplicationDiagnostics(List<String> applicationDiagnostics) {
         this.applicationDiagnostics = applicationDiagnostics;
+    }
+
+    /**
+     * Used to force implementations to define an equals method, with the same contract
+     *
+     * @param other The other assert
+     * @return true if these two items are the same
+     * @see Object#equals(Object)
+     */
+    public abstract boolean matches(ApplicationAssertion other);
+
+    /**
+     * Used to force implementations to define a hash method, with the same contract
+     *
+     * @return A hash code corresponding to this object
+     * @see Object#hashCode()
+     */
+    public abstract int toHash();
+
+    @Override
+    public final int hashCode() {
+        return toHash();
+    }
+
+    @Override
+    public final boolean equals(Object other) {
+        return other instanceof ApplicationAssertion && matches((ApplicationAssertion) other);
     }
 }

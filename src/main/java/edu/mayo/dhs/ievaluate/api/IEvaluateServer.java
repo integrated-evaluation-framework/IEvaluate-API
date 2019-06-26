@@ -2,11 +2,15 @@ package edu.mayo.dhs.ievaluate.api;
 
 import edu.mayo.dhs.ievaluate.api.applications.ApplicationManager;
 import edu.mayo.dhs.ievaluate.api.applications.ProfiledApplication;
+import edu.mayo.dhs.ievaluate.api.models.assertions.AssertionDefinition;
+import edu.mayo.dhs.ievaluate.api.models.assertions.AssertionInput;
+import edu.mayo.dhs.ievaluate.api.models.assertions.AssertionOutput;
 import edu.mayo.dhs.ievaluate.api.plugins.IEvaluatePlugin;
 import edu.mayo.dhs.ievaluate.api.plugins.PluginManager;
 import edu.mayo.dhs.ievaluate.api.storage.StorageProvider;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -51,8 +55,28 @@ public interface IEvaluateServer {
     /* ===== End Serialization Functions ===== */
 
     /* ===== Begin Assertion Definitions ===== */
+    /**
+     * Gets a singleton definition instance for assertions that specify an input and output type
+     * @param clazz The class of the assertion definition
+     * @return The assertion definition singleton
+     */
+    AssertionDefinition getAssertionDefinition(Class<? extends AssertionDefinition> clazz);
 
+    /**
+     * Creates an assertion input instance of the specified type and class
+     * @param clazz The {@link AssertionInput} class to instantiate
+     * @param inputParams The parameters defining the input
+     * @return A new {@link AssertionInput} instance of type clazz initialized with the specified parameters
+     */
+    AssertionInput getAssertionInput(Class<? extends AssertionInput> clazz, Map<String, String> inputParams);
 
+    /**
+     * Creates an assertion output instance of the specified type and class
+     * @param clazz The {@link AssertionOutput} class to instantiate
+     * @param values The parameters defining the assertion value
+     * @return A new {@link AssertionOutput} instance of type clazz initialized with the specified values
+     */
+    AssertionOutput getAssertionOutput(Class<? extends AssertionOutput> clazz, Map<String, String> values);
 
     /* ===== End Assertion Definitions ===== */
 

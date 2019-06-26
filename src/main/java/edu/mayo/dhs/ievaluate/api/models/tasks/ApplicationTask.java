@@ -1,13 +1,11 @@
 package edu.mayo.dhs.ievaluate.api.models.tasks;
 
+import edu.mayo.dhs.ievaluate.api.models.assertions.AssertionDefinition;
+
 public abstract class ApplicationTask {
-    protected String name;
 
-    public String getName() {
-        return name;
-    }
+    public abstract String getName();
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public abstract Class<? extends AssertionDefinition> getTaskAssertionDef();
+
 }

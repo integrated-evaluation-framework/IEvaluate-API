@@ -1,9 +1,29 @@
 package edu.mayo.dhs.ievaluate.api.models.assertions;
 
+import java.util.List;
+import java.util.Map;
+
 /**
- * Used to define application assertion outputs
+ * An application assertion output definition
  */
 public abstract class AssertionOutput {
+
+    /**
+     * @return An ordered listing of value field names that serve as keys for {@link #asValueMap()} ()}
+     */
+    public abstract List<String> valueFieldNames();
+
+    /**
+     * @return The output parameters as a map
+     */
+    public abstract Map<String, String> asValueMap();
+
+    /**
+     * Used to instantiate this output definition instance with the given parameter map
+     *
+     * @param values The values map representing pipeline output
+     */
+    public abstract void fromOutputMap(Map<String, String> values);
 
     /**
      * Used to force implementations to define an equals method, with the same contract

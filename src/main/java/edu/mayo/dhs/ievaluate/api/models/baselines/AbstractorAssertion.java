@@ -1,5 +1,6 @@
 package edu.mayo.dhs.ievaluate.api.models.baselines;
 
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -8,7 +9,7 @@ import java.util.UUID;
 public abstract class AbstractorAssertion {
     protected UUID id;
     protected UUID abstractorUID;
-    protected String assertedValue;
+    protected Map<String, String> assertedValue;
 
     public UUID getId() {
         return id;
@@ -26,11 +27,11 @@ public abstract class AbstractorAssertion {
         this.abstractorUID = abstractorUID;
     }
 
-    public String getAssertedValue() {
+    public Map<String, String> getAssertedValue() {
         return assertedValue;
     }
 
-    public void setAssertedValue(String assertedValue) {
+    public void setAssertedValue(Map<String, String> assertedValue) {
         this.assertedValue = assertedValue;
     }
 }
