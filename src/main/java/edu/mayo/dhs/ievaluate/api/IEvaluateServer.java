@@ -55,6 +55,13 @@ public interface IEvaluateServer {
     /* ===== End Serialization Functions ===== */
 
     /* ===== Begin Assertion Definitions ===== */
+
+    /**
+     * Registers a new {@link AssertionDefinition}. Must be done before {@link InitState#POST_ENABLE}
+     * @param clazz The class of the definition to register
+     */
+    void registerAssertionDefinition(Class<? extends AssertionDefinition> clazz);
+
     /**
      * Gets a singleton definition instance for assertions that specify an input and output type
      * @param clazz The class of the assertion definition
