@@ -62,4 +62,9 @@ public abstract class ProfiledApplication {
     public void setTasks(List<ApplicationTask> tasks) {
         this.tasks = tasks;
     }
+
+    /**
+     * @return An optional application definition for user-defined applications. Can be null if instantiation is only
+     */
+    public abstract Class<? extends ApplicationDefinition> getApplicationDefinition();
 }
