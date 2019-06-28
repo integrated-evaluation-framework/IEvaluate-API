@@ -2,6 +2,8 @@ package edu.mayo.dhs.ievaluate.api.applications;
 
 import edu.mayo.dhs.ievaluate.api.models.tasks.ApplicationTask;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +32,20 @@ public abstract class ProfiledApplication {
      */
     protected List<ApplicationTask> tasks;
 
+    // Used by jackson, required.
+    protected ProfiledApplication() {}
+
+    public ProfiledApplication(String name, String description) {
+        this(UUID.randomUUID(), name, description);
+    }
+
+
+    public ProfiledApplication(UUID id, String name, String description, ApplicationTask... tasks) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.tasks = new ArrayList<>(Arrays.asList(tasks));
+    }
 
     public UUID getId() {
         return id;

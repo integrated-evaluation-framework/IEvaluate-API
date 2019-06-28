@@ -15,7 +15,6 @@ public abstract class ApplicationAssertion {
     protected UUID id;
     protected ProfiledApplication application;
     protected ApplicationTask task;
-    protected Class<? extends AssertionDefinition> definition;
     protected Date assertionDtm;
     protected String applicationVersion;
     protected String input;
@@ -37,14 +36,6 @@ public abstract class ApplicationAssertion {
 
     public void setApplication(ProfiledApplication application) {
         this.application = application;
-    }
-
-    public Class<? extends AssertionDefinition> getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(Class<? extends AssertionDefinition> definition) {
-        this.definition = definition;
     }
 
     public ApplicationTask getTask() {

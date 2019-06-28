@@ -2,6 +2,8 @@ package edu.mayo.dhs.ievaluate.api.applications;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.io.IOException;
+
 /**
  * Implementations define how to marshal and unmarshal {@link ProfiledApplication} instances from storage, as well as
  * produce new instances
@@ -31,7 +33,7 @@ public interface ApplicationProvider<T extends ProfiledApplication> {
      * @param json The json representation of the application instance
      * @return An instantiation of the profiled application generated from this json representation
      */
-    T unmarshal(JsonNode json);
+    T unmarshal(JsonNode json) throws IOException;
 
 
     /**
